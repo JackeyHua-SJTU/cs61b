@@ -1,3 +1,5 @@
+import org.junit.Test;
+
 public class ArrayDeque<T> {
     private T[] array;
     private int size;
@@ -18,7 +20,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (len == size) {
+        if (len == size - 1) {
             resize();
         }
         array[nextFirst] = item;
@@ -27,7 +29,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if (len == size) {
+        if (len == size - 1) {
             resize();
         }
         array[nextLast] = item;
@@ -76,7 +78,7 @@ public class ArrayDeque<T> {
         resize();
         return num;
     }
-
+    @Test
     public T get(int index) {
         if (index < 0 || index >= len) {
             return null;
@@ -86,7 +88,7 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-        if (len == size) {
+        if (len == size - 1) {
             T[] newArray = (T[]) new Object[size * 2];
             for (int i = 0; i < len; i += 1) {
                 newArray[i] = array[(nextFirst + i + 1) % size];
@@ -95,7 +97,7 @@ public class ArrayDeque<T> {
             size = size * 2;
             nextFirst = size - 1;
             nextLast = len;
-        } else if (size >= 16 && len / size < 0.25) {
+        } else if (size >= 16 && len / size <= 0.25) {
             T[] newArray = (T[]) new Object[size / 2];
             for (int i = 0; i < len; i += 1) {
                 newArray[i] = array[(nextFirst + i + 1) % size];
@@ -104,6 +106,8 @@ public class ArrayDeque<T> {
             size = size / 2;
             nextFirst = size - 1;
             nextLast = len;
+        } else {
+            return;
         }
     }
 
