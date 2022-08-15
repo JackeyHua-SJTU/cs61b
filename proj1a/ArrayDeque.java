@@ -23,7 +23,7 @@ public class ArrayDeque<T> {
         }
         array[nextFirst] = item;
         len += 1;
-        nextFirst = (nextFirst - 1) % size;
+        nextFirst = (nextFirst - 1 + size) % size;
     }
 
     public void addLast(T item) {
@@ -32,7 +32,7 @@ public class ArrayDeque<T> {
         }
         array[nextLast] = item;
         len += 1;
-        nextLast = (nextLast + 1) % size;
+        nextLast = (nextLast + 1 + size) % size;
     }
 
     public boolean isEmpty() {
@@ -49,17 +49,17 @@ public class ArrayDeque<T> {
         }
         int iterateTime = (nextLast - nextFirst - 1 + size) % size;
         for (int i = 1; i < iterateTime; i += 1) {
-            System.out.print((nextFirst + i) % size);
+            System.out.print((nextFirst + i + size) % size);
             System.out.print(' ');
         }
-        System.out.print((nextFirst + iterateTime) % size);
+        System.out.print((nextFirst + iterateTime + size) % size);
     }
 
     public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        nextFirst = (nextFirst + 1) % size;
+        nextFirst = (nextFirst + 1 + size) % size;
         T num = array[nextFirst];
         resize();
         return num;
@@ -69,7 +69,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        nextLast = (nextLast - 1) % size;
+        nextLast = (nextLast - 1 + size) % size;
         T num = array[nextLast];
         resize();
         return num;
@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
         if (index < 0 || index >= len) {
             return null;
         } else {
-            return array[(nextFirst + 1 + index) % size];
+            return array[(nextFirst + 1 + index + size) % size];
         }
     }
 
@@ -87,7 +87,7 @@ public class ArrayDeque<T> {
         if (len == size - 1) {
             T[] newArray = (T[]) new Object[size * 2];
             for (int i = 0; i < len; i += 1) {
-                newArray[i] = array[(nextFirst + i + 1) % size];
+                newArray[i] = array[(nextFirst + i + 1 + size) % size];
             }
             array = newArray;
             size = size * 2;
@@ -96,7 +96,7 @@ public class ArrayDeque<T> {
         } else if (size >= 16 && len / size < 0.25) {
             T[] newArray = (T[]) new Object[size / 2];
             for (int i = 0; i < len; i += 1) {
-                newArray[i] = array[(nextFirst + i + 1) % size];
+                newArray[i] = array[(nextFirst + i + 1 + size) % size];
             }
             array = newArray;
             size = size / 2;

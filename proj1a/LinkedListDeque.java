@@ -1,8 +1,14 @@
-public class LinkedListDeque<T>{
+/** part 1 for proj1a
+ * building a double ended queue.
+ * @param <T>
+ */
+import org.junit.Test;
+
+public class LinkedListDeque<T> {
     private class LinkedList<T> {
-        T item;
-        LinkedList<T> next;
-        LinkedList<T> prev;
+        private T item;
+        private LinkedList<T> next;
+        private LinkedList<T> prev;
         public LinkedList(T inputItem, LinkedList inputPrev, LinkedList inputNext) {
             item = inputItem;
             next = inputNext;
@@ -84,7 +90,7 @@ public class LinkedListDeque<T>{
         temp.next = null;
         return temp.item;
     }
-
+    @Test
     public T get(int index) {
         if (index < 0 || index >= size || size == 0) {
             return null;
@@ -92,6 +98,7 @@ public class LinkedListDeque<T>{
             LinkedList<T> temp = startSentinal.next;
             while (index > 0) {
                 temp = temp.next;
+                index -= 1;
             }
             return temp.item;
         }
