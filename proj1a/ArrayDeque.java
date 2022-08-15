@@ -4,7 +4,7 @@ public class ArrayDeque<T> {
     private T[] array;
     private int size;
     private int len;
-    public int nextFirst;
+    private int nextFirst;
     private int nextLast;
 
     /** front points to the index before the start
@@ -20,7 +20,7 @@ public class ArrayDeque<T> {
     }
     @Test
     public void addFirst(T item) {
-        if (len == size - 1) {
+        if (len == size) {
             resize();
         }
         array[nextFirst] = item;
@@ -29,7 +29,7 @@ public class ArrayDeque<T> {
     }
     @Test
     public void addLast(T item) {
-        if (len == size - 1) {
+        if (len == size) {
             resize();
         }
         array[nextLast] = item;
@@ -90,7 +90,7 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-        if (len == size - 1) {
+        if (len == size) {
             T[] newArray = (T[]) new Object[size * 2];
             for (int i = 0; i < len; i += 1) {
                 newArray[i] = array[(nextFirst + i + 1) % size];
