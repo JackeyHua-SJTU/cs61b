@@ -18,7 +18,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (len == size - 1) {
+        if (len == size) {
             resize();
         }
         array[nextFirst] = item;
@@ -27,7 +27,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if (len == size - 1) {
+        if (len == size) {
             resize();
         }
         array[nextLast] = item;
@@ -86,7 +86,7 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-        if (len == size - 1) {
+        if (len == size) {
             T[] newArray = (T[]) new Object[size * 2];
             for (int i = 0; i < len; i += 1) {
                 newArray[i] = array[(nextFirst + i + 1) % size];
