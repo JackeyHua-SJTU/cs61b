@@ -99,7 +99,7 @@ public class ArrayDeque<T> {
             size = size * 2;
             nextFirst = size - 1;
             nextLast = len;
-        } else if (size >= 16 && len / size <= 0.25) {
+        } else if (size >= 16 && (4 * len < size)) {
             T[] newArray = (T[]) new Object[size / 2];
             for (int i = 0; i < len; i += 1) {
                 newArray[i] = array[(nextFirst + i + 1) % size];

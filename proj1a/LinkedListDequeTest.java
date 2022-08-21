@@ -1,4 +1,6 @@
 /** Performs some basic linked list tests. */
+import org.junit.Test;
+import static org.junit.Assert.*;
 public class LinkedListDequeTest {
 	
 	/* Utility method for printing out empty checks. */
@@ -36,7 +38,7 @@ public class LinkedListDequeTest {
 	public static void addIsEmptySizeTest() {
 		System.out.println("Running add/isEmpty/Size test.");
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+
 		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -58,7 +60,7 @@ public class LinkedListDequeTest {
 		lld1.printDeque();
 
 		printTestStatus(passed);
-		*/
+
 	}
 
 	/** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
@@ -67,7 +69,7 @@ public class LinkedListDequeTest {
 		System.out.println("Running add/remove test.");
 
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-		/*
+
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
@@ -81,7 +83,16 @@ public class LinkedListDequeTest {
 		passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
 		printTestStatus(passed);
-		*/
+
+	}
+	@Test
+	public void testGet() {
+		LinkedListDeque<Integer> a = new LinkedListDeque<>();
+		a.addFirst(1);
+		a.addFirst(2);
+		a.addFirst(3);
+		int num = a.get(1);
+		assertTrue(num == 2);
 	}
 
 	public static void main(String[] args) {
