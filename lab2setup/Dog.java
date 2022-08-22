@@ -1,3 +1,4 @@
+
 public class Dog {
     private int size;
 
@@ -12,4 +13,5 @@ public class Dog {
         } 
         return "bark";
     }
+
 }

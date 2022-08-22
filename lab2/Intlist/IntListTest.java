@@ -39,7 +39,6 @@ public class IntListTest {
      * Keep in mind that dcatenate(A, B) is NOT required to leave A untouched.
      * Anything can happen to A.
      */
-
     @Test
     public void testSquareListRecursive() {
         IntList L = IntList.of(1, 2, 3);
