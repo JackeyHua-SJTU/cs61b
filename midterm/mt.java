@@ -13,12 +13,17 @@ public class mt {
     }
 
     /**
-     * UK Runs
-     * UK Runs
-     * Compile Error
+     * Two Key Things
+     * 1. Overriding means same name, same argument type
+     * 2. Compile time choose the method based on Static Type
+     *    Runtime choose the overriden method based on Dynamic Type
      *
      * UK Runs
-     * USK Runs
+     * UK Runs
+     * Compile Error -> UK Runs
+     *
+     * UK Runs
+     * USK Runs -> UK Runs
      * USK Runs
      *
      * Compile Error
@@ -26,9 +31,11 @@ public class mt {
      * UF Runs
      *
      * blank
-     * USK Runs
-     * USK Runs
-     * UK Runs
+     * USK Runs -> UK Runs
+     * USK Runs -> UK Runs
+     * UK Runs -> Runtime Error -----Still Question Here!!!!
+     *                          Kinda you cannot store a casted parentclass variable in a subclass variable
+     *
      */
 
     public static int[] sans(int[] x, int y) {
@@ -131,6 +138,7 @@ public class mt {
         /**
          * Crucial!!!
          * How to define a default function in an interface?
+         * You can only use the function defined in the interface to manipulate
          */
         default void purge(Item x) {
             ArrayStack<Item> ars = new ArrayStack<>();
@@ -144,6 +152,23 @@ public class mt {
                 this.push(ars.pop());
             }
         }
+        /** Recursive version
+         *  仍然是分治法的思想
+         *  先取出栈顶元素 让剩下的部分删掉x
+         *  最后再比较取出来的元素是否是x
+         *
+         *  if (size() == 0) {
+         *      return;
+         *  }
+         * Item top = pop();
+         * purge(x);
+         * if (!x.equals(top)) {
+         *     push(top);
+         * }
+         *
+         */
+
+
     }
 
     public class Combine {
@@ -198,7 +223,10 @@ public class mt {
         public int size;
 
         public void plusEquals(DLListOfInts x) {
-            if (size != x.size) {
+            /** if (size != x.size) -> wrong
+             *  does not take into account the occasion when x is null
+             */
+            if (x == null || size != x.size) {
                 return;
             }
             IntNode temp = x.sentinel.next;
