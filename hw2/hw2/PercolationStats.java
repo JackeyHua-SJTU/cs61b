@@ -22,7 +22,7 @@ public class PercolationStats {
                 int rand2 = StdRandom.uniform(0, N);
                 pc.open(rand1, rand2);
             }
-            ans[index] = (double)pc.numberOfOpenSites() / N;
+            ans[index] = (double)pc.numberOfOpenSites() / (N * N);
         }
         mean = StdStats.mean(ans);
         stddev = StdStats.stddev(ans);
@@ -37,11 +37,11 @@ public class PercolationStats {
     }
 
     public double confidenceLow() {
-        return mean - 1.96 * Math.sqrt(stddev / time);
+        return mean - 1.96 * stddev / Math.sqrt(time);
     }
 
     public double confifenceHigh() {
-        return mean + 1.96 * Math.sqrt(stddev / time);
+        return mean + 1.96 * stddev / Math.sqrt(time);
     }
 
 }
