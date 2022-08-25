@@ -1,87 +1,90 @@
 package hw2;
 
-import static org.junit.Assert.*;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
+    private int size;
     private WeightedQuickUnionUF uf;
-    private WeightedQuickUnionUF uf2;
+    private boolean[] open;
     private int openSites;
-    private boolean[] isOpened;
-    private int N;
-    private int top, bottom;
+    private int top;
+    private int bottom;
 
     public Percolation(int N) {
         if (N <= 0) {
-            throw new IllegalArgumentException();
+            throw new java.lang.IllegalArgumentException();
         }
-        uf = new WeightedQuickUnionUF(N * N + 2);
-        uf2 = new WeightedQuickUnionUF(N * N + 2);
-        this.N = N;
-        top = N * N;
-        bottom = N * N + 1;
-        openSites = 0;
-        isOpened = new boolean[N * N + 2];
+        this.size = N;
+        this.uf = new WeightedQuickUnionUF(N * N + 2);
+        this.open = new boolean[N * N];
+        this.top = N * N;
+        this.bottom = N * N + 1;
+        for (int i = 0; i < N * N; i += 1) {
+            open[i] = false;
+        }
+        for (int i = 0; i < N; i += 1) {
+            uf.union(top, i);
+        }
+        this.openSites = 0;
+    }
+    private int xyTo1d(int row, int col) {
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            return -1;
+        }
+        return size * row + col;
     }
 
-    private int getId(int row, int col) {
-        return row * N + col;
-    }
-
-    private boolean isPositionValid(int row, int col) {
-        return row >= 0 && row < N && col >= 0 && col < N;
+    private boolean isLastRow(int num) {
+        return (num >= size * (size - 1) && num < size * size);
     }
 
     public void open(int row, int col) {
-        if (!isPositionValid(row, col)) {
-            throw new IndexOutOfBoundsException();
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            throw new java.lang.IndexOutOfBoundsException();
         }
-
         if (isOpen(row, col)) {
             return;
         }
 
-        int id = getId(row, col);
-        isOpened[id] = true;
+        int xy = xyTo1d(row, col);
+        open[xy] = true;
         openSites += 1;
-
-        int[][] neibors = {
-                {row - 1, col},
-                {row + 1, col},
-                {row, col + 1},
-                {row, col - 1}
-        };
-        for (int[] nei : neibors) {
-            if (isPositionValid(nei[0], nei[1]) && isOpen(nei[0], nei[1])) {
-                int id2 = getId(nei[0], nei[1]);
-                uf.union(id, id2);
-                uf2.union(id, id2);
+        int[] temp = new int[4];
+        temp[0] = xyTo1d(row - 1, col);
+        temp[1] = xyTo1d(row, col - 1);
+        temp[2] = xyTo1d(row, col + 1);
+        temp[3] = xyTo1d(row + 1, col);
+        for (int i : temp) {
+            if (i <= 0) {
+                continue;
             }
-        }
-
-        if (row == 0) {
-            uf.union(top, id);
-            uf2.union(top, id);
-        }
-        if (row == N - 1) {
-            uf.union(bottom, id);
+            /**if (open[i] && (uf.connected(i, top) || isFull(row, col))) {
+             uf.union(i, xy);
+             if (isLastRow(i) || isLastRow(xy)) {
+             uf.union(i, bottom);
+             }
+             }*/
+            if (open[i] && open[xy]) {
+                uf.union(i, xy);
+                if (isLastRow(i) || isLastRow(xy)) {
+                    uf.union(i, bottom);
+                }
+            }
         }
     }
 
     public boolean isOpen(int row, int col) {
-        if (!isPositionValid(row, col)) {
-            throw new IndexOutOfBoundsException();
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            throw new java.lang.IndexOutOfBoundsException();
         }
-
-        return isOpened[getId(row, col)];
+        return open[xyTo1d(row, col)];
     }
 
     public boolean isFull(int row, int col) {
-        if (!isPositionValid(row, col)) {
-            throw new IndexOutOfBoundsException();
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            throw new java.lang.IndexOutOfBoundsException();
         }
-
-        return uf2.connected(top, getId(row, col));
+        return uf.connected(xyTo1d(row, col), top) && isOpen(row, col);
     }
 
     public int numberOfOpenSites() {
@@ -93,21 +96,19 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-        Percolation percolation = new Percolation(5);
-        assertFalse(percolation.percolates());
-        percolation.open(0, 0);
-        percolation.open(1, 1);
-        percolation.open(0, 1);
-        assertFalse(percolation.isOpen(1, 0));
-        percolation.open(3, 4);
-        percolation.open(2, 4);
-        percolation.open(2, 2);
-        percolation.open(2, 2);
-        percolation.open(2, 3);
-        percolation.open(0, 2);
-        percolation.open(1, 2);
-        assertTrue(percolation.isFull(2, 2));
-        percolation.open(4, 4);
-        assertTrue(percolation.percolates());
+        Percolation a = new Percolation(3);
+        a.open(0, 0);
+        System.out.println(a.isFull(0, 0));
+        a.open(1, 2);
+        System.out.println(a.isFull(1, 0));
+        a.open(1, 1);
+        System.out.println(a.isFull(1, 1));
+        a.open(2, 1);
+        System.out.println(a.isFull(2, 1));
+        a.open(0, 2);
+        System.out.println(a.uf.connected(0, 9));
+        System.out.println(a.numberOfOpenSites());
+        System.out.print(a.percolates());
     }
+
 }
