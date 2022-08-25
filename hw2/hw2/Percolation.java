@@ -25,9 +25,6 @@ public class Percolation {
         for (int i = 0; i < N; i += 1) {
             uf.union(top, i);
         }
-        for (int i = N * (N - 1); i < N * N; i += 1) {
-            uf.union(bottom, i);
-        }
         this.openSites = 0;
     }
     private int xyTo1d(int row, int col) {
@@ -35,6 +32,10 @@ public class Percolation {
             return -1;
         }
         return size * row + col;
+    }
+
+    private boolean isLastRow(int num) {
+        return (num / (size * size) == (size - 1));
     }
 
     public void open(int row, int col) {
@@ -57,11 +58,17 @@ public class Percolation {
             if (i <= 0) {
                 continue;
             }
-            if (open[i] && (uf.connected(i, top) || isFull(row, col))) {
+            /**if (open[i] && (uf.connected(i, top) || isFull(row, col))) {
                 uf.union(i, xy);
-            }
+                if (isLastRow(i) || isLastRow(xy)) {
+                    uf.union(i, bottom);
+                }
+            }*/
             if (open[i] && open[xy]) {
                 uf.union(i, xy);
+                if (isLastRow(i) || isLastRow(xy)) {
+                    uf.union(i, bottom);
+                }
             }
         }
     }
