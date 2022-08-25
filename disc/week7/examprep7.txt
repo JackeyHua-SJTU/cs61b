@@ -1,0 +1,4 @@
+When dealing with recursion, use mathematical way to figure out the order of growth.
+Key point is that base case takes constant times
+e.g. F(N) = 4 * F(N / 2) + N * 2 
+     F(1) = 1
