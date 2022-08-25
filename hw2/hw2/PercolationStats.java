@@ -18,11 +18,11 @@ public class PercolationStats {
         for (int i = 0; i < T; i += 1) {
             pc = pf.make(N);
             while (!pc.percolates()) {
-                int rand1 = StdRandom.uniform(0, N);
-                int rand2 = StdRandom.uniform(0, N);
+                int rand1 = StdRandom.uniform(N);
+                int rand2 = StdRandom.uniform(N);
                 pc.open(rand1, rand2);
             }
-            ans[index] = (double)pc.numberOfOpenSites() / (N * N);
+            ans[index] = (double) pc.numberOfOpenSites() / (N * N);
         }
         mean = StdStats.mean(ans);
         stddev = StdStats.stddev(ans);
@@ -40,7 +40,7 @@ public class PercolationStats {
         return mean - 1.96 * stddev / Math.sqrt(time);
     }
 
-    public double confifenceHigh() {
+    public double confidenceHigh() {
         return mean + 1.96 * stddev / Math.sqrt(time);
     }
 

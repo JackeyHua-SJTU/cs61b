@@ -25,7 +25,7 @@ public class Percolation {
         for (int i = 0; i < N; i += 1) {
             uf.union(top, i);
         }
-        for (int i = N * (N - 1); i < N * N; i += 1){
+        for (int i = N * (N - 1); i < N * N; i += 1) {
             uf.union(bottom, i);
         }
         this.openSites = 0;
@@ -91,13 +91,13 @@ public class Percolation {
     public static void main(String[] args) {
         Percolation a = new Percolation(3);
         a.open(0, 0);
-        System.out.println(a.isFull(0,0));
+        System.out.println(a.isFull(0, 0));
         a.open(1, 2);
-        System.out.println(a.isFull(1,0));
+        System.out.println(a.isFull(1, 0));
         a.open(1, 1);
-        System.out.println(a.isFull(1,1));
+        System.out.println(a.isFull(1, 1));
         a.open(2, 1);
-        System.out.println(a.isFull(2,1));
+        System.out.println(a.isFull(2, 1));
         a.open(0, 2);
         System.out.println(a.uf.connected(0, 9));
         System.out.println(a.numberOfOpenSites());
