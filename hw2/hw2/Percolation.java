@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private int size;
     private WeightedQuickUnionUF uf;
+    private WeightedQuickUnionUF uf2;
     private boolean[] open;
     private int openSites;
     private int top;
@@ -16,6 +17,7 @@ public class Percolation {
         }
         this.size = N;
         this.uf = new WeightedQuickUnionUF(N * N + 2);
+        this.uf2 = new WeightedQuickUnionUF(N * N + 2);
         this.open = new boolean[N * N];
         this.top = N * N;
         this.bottom = N * N + 1;
@@ -25,8 +27,12 @@ public class Percolation {
         for (int i = 0; i < N; i += 1) {
             uf.union(top, i);
         }
+        for (int i = size * (size - 1); i < size * size; i += 1) {
+            uf2.union(bottom, i);
+        }
         this.openSites = 0;
     }
+
     private int xyTo1d(int row, int col) {
         if (row < 0 || row >= size || col < 0 || col >= size) {
             return -1;
@@ -34,8 +40,12 @@ public class Percolation {
         return size * row + col;
     }
 
-    private boolean isLastRow(int num) {
-        return num >= size * (size - 1) && num < size * size;
+    private void check(int i, int xy) {
+        if (uf.connected(i, top)) {
+            if (uf2.connected(i, bottom) || uf2.connected(xy, bottom)) {
+                uf.union(i, bottom);
+            }
+        }
     }
 
     public void open(int row, int col) {
@@ -49,9 +59,6 @@ public class Percolation {
         int xy = xyTo1d(row, col);
         open[xy] = true;
         openSites += 1;
-        if (isLastRow(xy)) {
-            uf.union(xy, bottom);
-        }
 
         int[] temp = new int[4];
         temp[0] = xyTo1d(row - 1, col);
@@ -64,9 +71,8 @@ public class Percolation {
             }
             if (open[i] && open[xy]) {
                 uf.union(i, xy);
-                if (isLastRow(i)) {
-                    uf.union(i, bottom);
-                }
+                uf2.union(i, xy);
+                check(i, xy);
             }
         }
     }
@@ -96,11 +102,11 @@ public class Percolation {
     public static void main(String[] args) {
         Percolation a = new Percolation(3);
         a.open(0, 0);
-        System.out.println(a.isFull(0, 0));
         a.open(1, 0);
-        System.out.println(a.isFull(1, 0));
+        a.open(2, 1);
+        a.open(1, 1);
+        a.open(2, 0);
         System.out.println(a.numberOfOpenSites());
         System.out.print(a.percolates());
     }
-
 }
