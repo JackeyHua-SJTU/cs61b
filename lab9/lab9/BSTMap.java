@@ -120,33 +120,70 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     /**
+     * Removes the smallest key and associated value from the symbol table.
+     */
+    public void deleteMin() {
+        root = deleteMin(root);
+    }
+
+    private Node deleteMin(Node x) {
+        if (x.left == null) return x.right;
+        x.left = deleteMin(x.left);
+        return x;
+    }
+
+    /**
+     * Returns the smallest key in the symbol table.
+     *
+     * @return the smallest key in the symbol table
+     */
+    public K min() {
+        return min(root).key;
+    }
+
+    private Node min(Node x) {
+        if (x.left == null) {
+            return x;
+        } else {
+            return min(x.left);
+        }
+    }
+
+    /**
      * Removes KEY from the tree if present
      * returns VALUE removed,
      * null on failed removal.
+     *
+     * @Source https://algs4.cs.princeton.edu/32bst/BST.java.html
+     *
+     * pretty handy solution of remove action
+     *
+     * @Important !!!!!!!!
      */
     @Override
     public V remove(K key) {
-        V value = get(key);
-        if (value == null) {
-            return null;
-        }
-
-        return value;
+        root = removeHelper(root, key);
+        return get(key);
     }
 
     private Node removeHelper(Node p, K key) {
-        if (key.compareTo(p.key) > 0) {
-           return removeHelper(p.right, key);
-        } else if(key.compareTo(p.key) < 0) {
-            return removeHelper(p.left, key);
+        if (p.key.compareTo(key) > 0) {
+            p.left = removeHelper(p.left, key);
+        } else if (p.key.compareTo(key) < 0) {
+            p.right = removeHelper(p.right, key);
         } else {
-            if (p.left != null && p.right != null) {
-
+            if (p.left == null) {
+                p = p.right;
+            } else if (p.right == null) {
+                p = p.left;
             } else {
-                return (p.left != null) ? p.left : p.right;
+                Node t = p;
+                p = min(t.right);
+                p.right = deleteMin(t.right);
+                p.left = t.left;
             }
         }
-        return null;
+        return p;
     }
 
     /**
