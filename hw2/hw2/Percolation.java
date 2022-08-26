@@ -59,6 +59,12 @@ public class Percolation {
         int xy = xyTo1d(row, col);
         open[xy] = true;
         openSites += 1;
+        /** a little bug happens when size == 1, when we click the only pile,
+         *  it should percolate but turns out the opposite.
+         */
+        if (xy == 0 && size == 1) {
+            uf.union(top, bottom);
+        }
 
         int[] temp = new int[4];
         temp[0] = xyTo1d(row - 1, col);
