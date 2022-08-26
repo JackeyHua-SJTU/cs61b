@@ -34,19 +34,8 @@ public class Percolation {
         return size * row + col;
     }
 
-    private void checkBottom(int num) {
-        if (isLastRow(num) && uf.connected(num, top)) {
-            uf.union(num, bottom);
-        }
-    }
-
     private boolean isLastRow(int num) {
-        for (int i = size * (size - 1); i < size * size; i += 1) {
-            if (uf.connected(num, i)) {
-                return true;
-            }
-        }
-        return false;
+        return num >= size * (size - 1) && num < size * size;
     }
 
     public void open(int row, int col) {
@@ -60,19 +49,24 @@ public class Percolation {
         int xy = xyTo1d(row, col);
         open[xy] = true;
         openSites += 1;
-        checkBottom(xy);
+        if (isLastRow(xy)) {
+            uf.union(xy, bottom);
+        }
+
         int[] temp = new int[4];
         temp[0] = xyTo1d(row - 1, col);
         temp[1] = xyTo1d(row, col - 1);
         temp[2] = xyTo1d(row, col + 1);
         temp[3] = xyTo1d(row + 1, col);
         for (int i : temp) {
-            if (i <= 0) {
+            if (i < 0) {
                 continue;
             }
             if (open[i] && open[xy]) {
                 uf.union(i, xy);
-                checkBottom(i);
+                if (isLastRow(i)) {
+                    uf.union(i, bottom);
+                }
             }
         }
     }
@@ -88,7 +82,7 @@ public class Percolation {
         if (row < 0 || row >= size || col < 0 || col >= size) {
             throw new java.lang.IndexOutOfBoundsException();
         }
-        return uf.connected(xyTo1d(row, col), top) && isOpen(row, col);
+        return isOpen(row, col) && uf.connected(xyTo1d(row, col), top);
     }
 
     public int numberOfOpenSites() {
@@ -103,14 +97,8 @@ public class Percolation {
         Percolation a = new Percolation(3);
         a.open(0, 0);
         System.out.println(a.isFull(0, 0));
-        a.open(1, 2);
+        a.open(1, 0);
         System.out.println(a.isFull(1, 0));
-        a.open(1, 1);
-        System.out.println(a.isFull(1, 1));
-        a.open(2, 1);
-        System.out.println(a.isFull(2, 1));
-        a.open(0, 2);
-        System.out.println(a.uf.connected(0, 9));
         System.out.println(a.numberOfOpenSites());
         System.out.print(a.percolates());
     }
