@@ -11,6 +11,11 @@ public class Percolation {
     private int top;
     private int bottom;
 
+    /** a better idea is to use another uf, which never binds piles to bottom.
+     *  so when we check isFull, we just check in the new uf.
+     *  when we check percolates, we check in the initial uf.
+     */
+
     public Percolation(int N) {
         if (N <= 0) {
             throw new java.lang.IllegalArgumentException();
