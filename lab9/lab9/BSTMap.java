@@ -121,6 +121,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     /**
      * Removes the smallest key and associated value from the symbol table.
+     *
+     * @Notice The reason why we set the return type to Node is that it is easier to change the root
+     * , otherwise we need to use so-called destructive way to manipulate Node in a function, which is
+     * much difficult.
      */
     public void deleteMin() {
         root = deleteMin(root);
