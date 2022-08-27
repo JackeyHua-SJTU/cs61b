@@ -42,6 +42,9 @@ public class TestSimpleOomage {
         assertTrue(test.contains(case_3));
         assertFalse(test.contains(case_4));
 
+        int hash1 = case_1.hashCode();
+        int hash2 = case_2.hashCode();
+        int hash3 = case_3.hashCode();
         assertFalse(case_1.hashCode() == case_2.hashCode());
         assertFalse(case_2.hashCode() == case_3.hashCode());
     }

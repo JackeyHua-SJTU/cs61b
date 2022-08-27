@@ -71,7 +71,7 @@ public class TestComplexOomage {
         deadlyList.add(t2);
         deadlyList.add(t3);
         deadlyList.add(t4);
-        
+
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
 
