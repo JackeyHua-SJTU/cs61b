@@ -48,47 +48,30 @@ public class TestComplexOomage {
         List<Integer> case_2 = new ArrayList<>();
         List<Integer> case_3 = new ArrayList<>();
         List<Integer> case_4 = new ArrayList<>();
-        List<Integer> case_5 = new ArrayList<>();
-        List<Integer> case_6 = new ArrayList<>();
-        List<Integer> case_7 = new ArrayList<>();
-        List<Integer> case_8 = new ArrayList<>();
-        for (int j = 0; j < 50; j += 1) {
-            case_1.add(255);
-            case_2.add(255);
-            case_3.add(255);
-            case_4.add(255);
-            case_5.add(255);
-            case_6.add(255);
-            case_7.add(255);
-            case_8.add(255);
-        }
+
         case_1.add(1);
         case_2.add(2);
         case_3.add(3);
         case_4.add(4);
-        case_5.add(5);
-        case_6.add(6);
-        case_7.add(7);
-        case_8.add(8);
+
+        for (int j = 0; j < 10; j += 1) {
+            case_1.add(0);
+            case_2.add(0);
+            case_3.add(0);
+            case_4.add(0);
+
+        }
 
         ComplexOomage t1 = new ComplexOomage(case_1);
         ComplexOomage t2 = new ComplexOomage(case_2);
         ComplexOomage t3 = new ComplexOomage(case_3);
         ComplexOomage t4 = new ComplexOomage(case_4);
-        ComplexOomage t5 = new ComplexOomage(case_5);
-        ComplexOomage t6 = new ComplexOomage(case_6);
-        ComplexOomage t7 = new ComplexOomage(case_7);
-        ComplexOomage t8 = new ComplexOomage(case_8);
 
         deadlyList.add(t1);
         deadlyList.add(t2);
         deadlyList.add(t3);
         deadlyList.add(t4);
-        deadlyList.add(t5);
-        deadlyList.add(t6);
-        deadlyList.add(t7);
-        deadlyList.add(t8);
-
+        
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
 
