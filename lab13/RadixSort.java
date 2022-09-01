@@ -4,6 +4,15 @@
  * @author Akhil Batra, Alexander Hwang
  *
  */
+
+/**
+ * Notes !!!
+ * @author Jackey Hua
+ * note 1 : In Function Sort, we sort every string from its Least Important Digit, which is the rightmost one.
+ * note 2 : When a string is not long enough, you should place it in a special place with MINIMUM priority. I place
+ *          it in index 0.
+ */
+
 public class RadixSort {
     /**
      * Does LSD radix sort on the passed in array with the following restrictions:
