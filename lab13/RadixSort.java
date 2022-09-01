@@ -23,7 +23,7 @@ public class RadixSort {
             longestLen = (s.length() > longestLen) ? s.length() : longestLen;
         }
         for (int i = 0; i < longestLen; i += 1) {
-            sortHelperLSD(ret, i);
+            sortHelperLSD(ret, longestLen - 1 - i);
         }
         return ret;
     }
@@ -36,12 +36,12 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        int[] counts = new int[256];
+        int[] counts = new int[257];
         for (String s : asciis) {
             if (s.length() <= index) {
                 counts[0] += 1;
             } else {
-                counts[s.charAt(index)] += 1;
+                counts[s.charAt(index) + 1] += 1;
             }
         }
 
@@ -54,7 +54,7 @@ public class RadixSort {
 
         String[] tmp = asciis.clone();
         for (int i = 0; i < asciis.length; i += 1) {
-            int item = (tmp[i].length() <= index) ? 0 : tmp[i].charAt(index);
+            int item = (tmp[i].length() <= index) ? 0 : tmp[i].charAt(index) + 1;
             String initial = tmp[i];
             int place = starts[item];
             asciis[place] = initial;
@@ -78,13 +78,14 @@ public class RadixSort {
         return;
     }
 
-    /**
+
     public static void main(String[] args) {
-        String[] test = new String[]{"a", "b", "ab", "ac"};
+        String[] test = new String[]{"abcd#", "abc!", "abc*", "abc@", "dc$", "dc%"};
+        //String[] test = new String[]{ "abc!", "dc%"};
         String[] ans = sort(test);
         for (String x : ans) {
-            System.out.print(x);
+            System.out.println(x);
         }
     }
-    */
+
 }
