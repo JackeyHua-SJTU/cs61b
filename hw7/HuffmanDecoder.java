@@ -11,7 +11,7 @@ public class HuffmanDecoder {
         BinaryTrie bt = (BinaryTrie) x;
         BitSequence bs = (BitSequence) y;
         List<Character> ls = new ArrayList<>();
-        while (bs.length() > 0) {
+        while (bs != null && bs.length() > 0) {
             Match mc = bt.longestPrefixMatch(bs);
             if (mc != null) {
                 ls.add(mc.getSymbol());
