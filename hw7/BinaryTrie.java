@@ -90,7 +90,7 @@ public class BinaryTrie implements Serializable {
      * Because in the priority queue, we decide the priority
      * based on the value of freq.
      */
-    private class Node implements Comparable<Node> {
+    private class Node implements Comparable<Node>, Serializable {
         private char ch;
         private int freq;
         private Node left, right;
