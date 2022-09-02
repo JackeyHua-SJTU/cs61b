@@ -51,7 +51,7 @@ public class Solver {
         return stk;
     }
 
-    private class searchNode implements Comparable<searchNode>{
+    private class searchNode implements Comparable<searchNode> {
         private WorldState ws;
         private int numOfMoves;
         private searchNode parent;

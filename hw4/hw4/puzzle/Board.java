@@ -3,7 +3,7 @@ package hw4.puzzle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board implements WorldState{
+public class Board implements WorldState {
     private int size;
     private int[][]tile;
 
@@ -88,7 +88,10 @@ public class Board implements WorldState{
 
     private int hamDeviation(int i, int j) {
         int correct = i * size + j + 1;
-        int current = tile[i][j];
+        int current = tileAt(i, j);
+        if (current == 0) {
+            return 0;
+        }
         return (current == correct) ? 0 : 1;
     }
 
@@ -103,8 +106,11 @@ public class Board implements WorldState{
     }
 
     private int mahDeviation(int i, int j) {
-        int correctIIndex = (tile[i][j] - 1) / size;
-        int correctJIndex = ((tile[i][j]) - 1) % size;
+        if (tileAt(i, j) == 0) {
+            return 0;
+        }
+        int correctIIndex = (tileAt(i, j) - 1) / size;
+        int correctJIndex = (tileAt(i, j) - 1) % size;
         return Math.abs(correctJIndex - j) + Math.abs(correctIIndex - i);
     }
 
@@ -127,6 +133,10 @@ public class Board implements WorldState{
         return true;
     }
 
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /** Returns the string representation of the board. 
       * Uncomment this method. */
     public String toString() {
@@ -135,7 +145,7 @@ public class Board implements WorldState{
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
