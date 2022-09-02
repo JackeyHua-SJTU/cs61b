@@ -9,9 +9,13 @@ public class Board implements WorldState {
     private int isCalculatedDistance;
 
     public Board(int[][] tiles) {
-        this.tile = tiles;
         this.size = tiles.length;
-        this.isCalculatedDistance = -1;
+        tile = new int[size][size];
+        for (int i = 0; i < size; i += 1) {
+            for (int j = 0; j < size; j += 1) {
+                tile[i][j] = tiles[i][j];
+            }
+        }
     }
 
     public int tileAt(int i, int j) {
@@ -117,12 +121,20 @@ public class Board implements WorldState {
     }
 
     public int estimatedDistanceToGoal() {
-        if (isCalculatedDistance == -1) {
-            isCalculatedDistance = manhattan();
-        }
-        return isCalculatedDistance;
+        return manhattan();
     }
 
+    /**
+     * Really Important Note !!!!!!!
+     * 1. When you override equals, you must spontaneously rewrite hashCode().
+     * 2. When we write equals, please bear in mind three steps below.
+     *    first, a shortcut for y == this
+     *    second, we should never equal to null or a different class variable.
+     *    third, specific compares. Remember to cast Object to corresponding class.
+     * @param y
+     * @return
+     */
+    @Override
     public boolean equals(Object y) {
         if (y == this) {
             return true;
