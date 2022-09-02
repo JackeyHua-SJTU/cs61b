@@ -2,6 +2,7 @@ package lab9tester;
 
 import static org.junit.Assert.*;
 
+import edu.princeton.cs.algs4.In;
 import org.junit.Test;
 import lab9.MyHashMap;
 
@@ -128,6 +129,9 @@ public class TestMyHashMap {
     }
 
     public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
+        MyHashMap<Integer, Integer> test = new MyHashMap<>();
+        for (int i = 0; i < 20; i += 1) {
+            test.put(i, 10 * i);
+        }
     }
 }

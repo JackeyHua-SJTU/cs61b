@@ -19,6 +19,7 @@ public class OomageTestUtility {
         }
         int lowerBound = oomages.size() / 50;
         int upperBound = (int) (oomages.size() / 2.5);
+        /** Notice the casting here! */
         for (int i : bucket){
             if (i >= lowerBound && i <= upperBound) {
                 continue;
