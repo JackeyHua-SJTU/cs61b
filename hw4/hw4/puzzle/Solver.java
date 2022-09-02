@@ -21,6 +21,11 @@ public class Solver {
             if (current.ws.isGoal()) {
                 return current;
             }
+            /**
+             * What the first if statement wants to do is that
+             * To make sure no x is the same as its grandparent,
+             * which is a common repetition.
+             */
             for (WorldState x : current.getWorldState().neighbors()) {
                 if (x.equals(current.getWorldState())) {
                     continue;
@@ -51,6 +56,13 @@ public class Solver {
         return stk;
     }
 
+    /**
+     * It is worth mentioning again that when we use Priority Queue,
+     * then the generic type must implement Comparable, to show that it
+     * has a unique compareTo function.
+     *
+     * When we may compute a data again and again, we can use a cache to shorten time.
+     */
     private class searchNode implements Comparable<searchNode> {
         private WorldState ws;
         private int numOfMoves;
