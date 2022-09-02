@@ -6,8 +6,15 @@ import java.util.List;
 public class Board implements WorldState {
     private int size;
     private int[][]tile;
-    private int isCalculatedDistance;
 
+    /**
+     * A really tricky problem: can you create a new 2d Array using clone()?
+     * The answer seems to be no!
+     * You only create a new array where every item in that points to the same item of the initial array.
+     * Namely, it is mutable.
+     * But it applies to 1d Array.
+     * @param tiles
+     */
     public Board(int[][] tiles) {
         this.size = tiles.length;
         tile = new int[size][size];
@@ -36,28 +43,48 @@ public class Board implements WorldState {
         int jIndexOfZero = ans[1];
 
         if (checkValidate(iIndexOfZero - 1, jIndexOfZero)) {
-            int[][] copy1 = tile.clone();
+            int[][] copy1 = new int[size][size];
+            for (int i = 0; i < size; i += 1) {
+                for (int j = 0; j < size; j += 1) {
+                    copy1[i][j] = tile[i][j];
+                }
+            }
             copy1[iIndexOfZero][jIndexOfZero] = copy1[iIndexOfZero - 1][jIndexOfZero];
             copy1[iIndexOfZero - 1][jIndexOfZero] = 0;
             ls.add(new Board(copy1));
         }
 
         if (checkValidate(iIndexOfZero + 1, jIndexOfZero)) {
-            int[][] copy2 = tile.clone();
+            int[][] copy2 = new int[size][size];
+            for (int i = 0; i < size; i += 1) {
+                for (int j = 0; j < size; j += 1) {
+                    copy2[i][j] = tile[i][j];
+                }
+            }
             copy2[iIndexOfZero][jIndexOfZero] = copy2[iIndexOfZero + 1][jIndexOfZero];
             copy2[iIndexOfZero + 1][jIndexOfZero] = 0;
             ls.add(new Board(copy2));
         }
 
         if (checkValidate(iIndexOfZero, jIndexOfZero - 1)) {
-            int[][] copy3 = tile.clone();
+            int[][] copy3 = new int[size][size];
+            for (int i = 0; i < size; i += 1) {
+                for (int j = 0; j < size; j += 1) {
+                    copy3[i][j] = tile[i][j];
+                }
+            }
             copy3[iIndexOfZero][jIndexOfZero] = copy3[iIndexOfZero][jIndexOfZero - 1];
             copy3[iIndexOfZero][jIndexOfZero - 1] = 0;
             ls.add(new Board(copy3));
         }
 
         if (checkValidate(iIndexOfZero, jIndexOfZero + 1)) {
-            int[][] copy4 = tile.clone();
+            int[][] copy4 = new int[size][size];
+            for (int i = 0; i < size; i += 1) {
+                for (int j = 0; j < size; j += 1) {
+                    copy4[i][j] = tile[i][j];
+                }
+            }
             copy4[iIndexOfZero][jIndexOfZero] = copy4[iIndexOfZero][jIndexOfZero + 1];
             copy4[iIndexOfZero][jIndexOfZero + 1] = 0;
             ls.add(new Board(copy4));
