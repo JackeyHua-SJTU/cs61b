@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,11 @@ public class HuffmanDecoder {
         List<Character> ls = new ArrayList<>();
         while (bs.length() > 0) {
             Match mc = bt.longestPrefixMatch(bs);
-            ls.add(mc.getSymbol());
+            if (mc != null) {
+                ls.add(mc.getSymbol());
+            } else {
+                continue;
+            }
             BitSequence temp = mc.getSequence();
             bs = bs.allButFirstNBits(temp.length());
         }

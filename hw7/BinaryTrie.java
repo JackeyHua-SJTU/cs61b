@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.MinPQ;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,13 +36,19 @@ public class BinaryTrie implements Serializable {
         int choice = querySequence.bitAt(index);
         if (choice == 1) {
             if (currentNode.right == null) {
-                return new Match(querySequence.firstNBits(index), currentNode.ch);
+                if (currentNode.ch != '\0') {
+                    return new Match(querySequence.firstNBits(index), currentNode.ch);
+                }
+                return null;
             } else {
                 return helperPrefix(querySequence, currentNode.right, index + 1);
             }
         } else {
             if (currentNode.left == null) {
-                return new Match(querySequence.firstNBits(index), currentNode.ch);
+                if (currentNode.ch != '\0') {
+                    return new Match(querySequence.firstNBits(index), currentNode.ch);
+                }
+                return null;
             } else {
                 return helperPrefix(querySequence, currentNode.left, index + 1);
             }
