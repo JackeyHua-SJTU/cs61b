@@ -13,7 +13,7 @@ public class Board implements WorldState {
     }
 
     public int tileAt(int i, int j) {
-        if (checkValidate(i, j)) {
+        if (!checkValidate(i, j)) {
             throw new java.lang.IndexOutOfBoundsException();
         }
         return tile[i][j];
