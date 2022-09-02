@@ -4,11 +4,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Jackey Hua
+ */
 public class BinaryTrie implements Serializable {
 
     private Node root;
     private Character[] charArray;
 
+    /**
+     * We use a Priority Queue to build the Huffman Tree.
+     *
+     * @param frequencyTable Used to create a Huffman Tree.
+     */
     public BinaryTrie(Map<Character, Integer> frequencyTable) {
         charArray = new Character[frequencyTable.size()];
         int index = 0;
@@ -28,6 +36,11 @@ public class BinaryTrie implements Serializable {
         root = pq.delMin();
     }
 
+    /**
+     * Call a Helper Function to recursively get the answer.
+     * @param querySequence
+     * @return
+     */
     public Match longestPrefixMatch(BitSequence querySequence) {
         return helperPrefix(querySequence, root,  0);
     }
@@ -55,6 +68,10 @@ public class BinaryTrie implements Serializable {
         }
     }
 
+    /**
+     * Still use recursive way to retain the lookupTable.
+     * @return
+     */
     public Map<Character, BitSequence> buildLookupTable() {
         Map<Character, BitSequence> ret = new HashMap<>();
         for (Character x : charArray) {
@@ -89,6 +106,9 @@ public class BinaryTrie implements Serializable {
      * It is necessary to implements Comparable
      * Because in the priority queue, we decide the priority
      * based on the value of freq.
+     *
+     * It is also necessary to implement serializable.
+     * Because if not, it cannot use the ObjectWriter.
      */
     private class Node implements Comparable<Node>, Serializable {
         private char ch;
