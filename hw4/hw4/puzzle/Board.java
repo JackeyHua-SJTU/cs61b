@@ -6,10 +6,12 @@ import java.util.List;
 public class Board implements WorldState {
     private int size;
     private int[][]tile;
+    private int isCalculatedDistance;
 
     public Board(int[][] tiles) {
         this.tile = tiles;
         this.size = tiles.length;
+        this.isCalculatedDistance = -1;
     }
 
     public int tileAt(int i, int j) {
@@ -115,10 +117,19 @@ public class Board implements WorldState {
     }
 
     public int estimatedDistanceToGoal() {
-        return manhattan();
+        if (isCalculatedDistance == -1) {
+            isCalculatedDistance = manhattan();
+        }
+        return isCalculatedDistance;
     }
 
     public boolean equals(Object y) {
+        if (y == this) {
+            return true;
+        }
+        if (y == null || y.getClass() != this.getClass()) {
+            return false;
+        }
         Board other = (Board) y;
         if (this.size != other.size) {
             return false;
